@@ -1,4 +1,4 @@
-#' Calculate Black-Scholes-Merton option price
+#' Calculate Black-Scholes option price
 #'
 #' @param type option type either 'call' or 'put'
 #' @param spot current stock price

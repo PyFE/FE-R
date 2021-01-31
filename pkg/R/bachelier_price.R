@@ -1,4 +1,4 @@
-#' Calculate normal model option price
+#' Calculate Bachelier model option price
 #'
 #' @param type option type either "call" or "put"
 #' @param price Price

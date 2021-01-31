@@ -2,7 +2,7 @@
 % Please edit documentation in R/blackscholes_impvol.R
 \name{BlackScholesImpvol}
 \alias{BlackScholesImpvol}
-\title{Calculate Black-Scholes-Merton implied vol}
+\title{Calculate Black-Scholes implied volatility}
 \usage{
 BlackScholesImpvol(
   type = "call",
@@ -36,7 +36,7 @@ BlackScholesImpvol(
 Implied vol
 }
 \description{
-Calculate Black-Scholes-Merton implied vol
+Calculate Black-Scholes implied volatility
 }
 \examples{
 spot <- 100

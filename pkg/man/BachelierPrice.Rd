@@ -2,7 +2,7 @@
 % Please edit documentation in R/bachelier_price.R
 \name{BachelierPrice}
 \alias{BachelierPrice}
-\title{Calculate normal model option price}
+\title{Calculate Bachelier model option price}
 \usage{
 BachelierPrice(
   type = "call",
@@ -36,7 +36,7 @@ BachelierPrice(
 option price
 }
 \description{
-Calculate normal model option price
+Calculate Bachelier model option price
 }
 \examples{
 spot <- 100

@@ -1,4 +1,4 @@
-#' Calculate normal model implied vol
+#' Calculate Bachelier model implied volatility
 #'
 #' @param type option type either 'call' or 'put'
 #' @param price Price

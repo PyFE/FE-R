@@ -1,4 +1,4 @@
-#' Calculate Black-Scholes-Merton implied vol
+#' Calculate Black-Scholes implied volatility
 #'
 #' @param type option type either 'call' or 'put'
 #' @param price Price

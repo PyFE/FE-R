@@ -2,7 +2,7 @@
 % Please edit documentation in R/blackscholes_price.R
 \name{BlackScholesPrice}
 \alias{BlackScholesPrice}
-\title{Calculate Black-Scholes-Merton option price}
+\title{Calculate Black-Scholes option price}
 \usage{
 BlackScholesPrice(
   type = "call",
@@ -36,7 +36,7 @@ BlackScholesPrice(
 option price
 }
 \description{
-Calculate Black-Scholes-Merton option price
+Calculate Black-Scholes option price
 }
 \examples{
 spot <- 100

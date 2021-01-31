@@ -1,9 +1,24 @@
+#' Constant Elasticity Of Variance (CEV) model option price
+#'
+#' @param strike
+#' @param spot
+#' @param forward
+#' @param t.exp
+#' @param sigma
+#' @param beta
+#' @param r
+#' @param div
+#' @param type
+#'
+#' @return
+#' @export
+#'
+#' @examples
 CEV <- function(
-  strike, spot, t.exp=1, sigma=0.01, vov=0, rho=0, beta=0.5,
+  strike, spot, forward = spot*exp((r-div)*t.exp),
+  t.exp=1, sigma=0.01, beta=0.5,
   r = 0, div = 0, type="call"
 ){
-  forward = spot*exp((r-div)*t.exp)
-
   betac <- 1 - beta
   scale <- (betac*sigma)^2*t.exp
   strike_cov = strike^(2*betac) / scale # strike change of variable

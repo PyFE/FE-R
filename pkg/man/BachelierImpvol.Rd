@@ -2,7 +2,7 @@
 % Please edit documentation in R/bachelier_impvol.R
 \name{BachelierImpvol}
 \alias{BachelierImpvol}
-\title{Calculate normal model implied vol}
+\title{Calculate Bachelier model implied volatility}
 \usage{
 BachelierImpvol(
   type = "call",
@@ -36,7 +36,7 @@ BachelierImpvol(
 implied vol
 }
 \description{
-Calculate normal model implied vol
+Calculate Bachelier model implied volatility
 }
 \examples{
 spot <- 100
