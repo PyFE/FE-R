@@ -9,5 +9,5 @@ Financial Engineering functions in R
 Install `devtools` package in run
 ```R
 library(devtools)
-install_github("PyFE/FE-R", subdir="pakage")
+devtools::install_github("PyFE/FE-R", subdir="pakage")
 ```
