@@ -7,18 +7,32 @@
 SabrHagan2002(
   strike,
   spot,
-  forward = spot * exp((r - div) * t.exp),
-  t.exp = 1,
+  forward = spot * exp((intr - divr) * texp),
+  texp = 1,
   sigma = 0.01,
   vov = 0,
   rho = 0,
   beta = 1,
-  r = 0,
-  div = 0,
+  intr = 0,
+  divr = 0,
   type = "BlackScholes"
 )
 }
 \arguments{
+\item{strike}{strike price}
+
+\item{spot}{current stock price}
+
+\item{forward}{forward stock price}
+
+\item{texp}{time to expiry}
+
+\item{sigma}{volatility}
+
+\item{intr}{interest rate}
+
+\item{divr}{dividend rate}
+
 \item{type}{'BlackScholes', 'call', 'put'}
 }
 \value{

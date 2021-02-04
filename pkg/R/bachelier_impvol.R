@@ -5,25 +5,25 @@
 #' @param spot current stock price
 #' @param forward forward stock price
 #' @param strike strike price
-#' @param t.exp time to expiry
-#' @param r interest rate
-#' @param div dividend rate
+#' @param texp time to expiry
+#' @param intr interest rate
+#' @param divr dividend rate
 #' @return implied vol
 #' @examples
 #' spot <- 100
 #' strike <- 100
-#' t.exp <- 1.2
+#' texp <- 1.2
 #' sigma <- 0.2
-#' r <- 0.05
+#' intr <- 0.05
 #' price <- 20
-#' vol <- FER::BachelierImpvol(price=price, spot=spot, strike=strike, t.exp=t.exp, r=r)
+#' vol <- FER::BachelierImpvol(price=price, spot=spot, strike=strike, texp=texp, intr=intr)
 #' @export
 BachelierImpvol <- function(
-  type = "call", price, spot, forward = spot*exp((r-div)*t.exp),
-  strike = forward, t.exp = 1, r = 0, div = 0
+  type = "call", price, spot, forward = spot*exp((intr-divr)*texp),
+  strike = forward, texp = 1, intr = 0, divr = 0
 ){
 
-  price.forward = price * exp(r*t.exp)
+  price.forward = price * exp(intr*texp)
 
   if( type == "call" ) {
     price.straddle <- 2*price.forward - (forward - strike)
@@ -33,7 +33,7 @@ BachelierImpvol <- function(
     price.straddle <- price.forward
   }
 
-  #vectors a and b used for rational Chebyshev approximation
+  # vectors a and b used for rational Chebyshev approximation
   a <- c(3.994961687345134e-1,
        2.100960795068497e1,
        4.980340217855084e1,
@@ -71,7 +71,7 @@ BachelierImpvol <- function(
 
   #approximation of h(n)
   #implied volatility
-  vol <- sqrt(pi*nu/(2*t.exp)) * price.straddle * (poly.a/poly.b)
+  vol <- sqrt(pi*nu/(2*texp)) * price.straddle * (poly.a/poly.b)
 
   return(vol)
 }

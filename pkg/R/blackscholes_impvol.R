@@ -5,24 +5,24 @@
 #' @param spot current stock price
 #' @param forward forward stock price
 #' @param strike strike price
-#' @param t.exp time to expiry
-#' @param r interest rate
-#' @param div dividend rate
+#' @param texp time to expiry
+#' @param intr interest rate
+#' @param divr dividend rate
 #' @return Implied vol
 #' @examples
 #' spot <- 100
 #' strike <- 100
-#' t.exp <- 1.2
+#' texp <- 1.2
 #' sigma <- 0.2
-#' r <- 0.05
+#' intr <- 0.05
 #' price <- 20
-#' vol <- FER::BlackScholesImpvol(price=price, spot=spot, strike=strike, t.exp=t.exp, r=r)
+#' vol <- FER::BlackScholesImpvol(price=price, spot=spot, strike=strike, texp=texp, intr=intr)
 #' @export
 BlackScholesImpvol <- function(
-  type = "call", price, spot, forward = spot*exp((r-div)*t.exp),
-  strike = forward, t.exp = 1, r = 0, div = 0
+  type = "call", price, spot, forward = spot*exp((intr-div)*texp),
+  strike = forward, texp = 1, intr = 0, divr = 0
 ){
-    price.forward = price * exp( r*t.exp)
+    price.forward = price * exp( r*texp)
 
     n.price = length(price.forward)
     n.strike = length(strike)
@@ -40,7 +40,7 @@ BlackScholesImpvol <- function(
       # Be careful here.... Chekc how functional works in R.
       sub <- function(sigma){
         f <- CalcBsmPrice(
-          type = type, forward = forward, strike = strike.vec[k], t.exp = t.exp, sigma = sigma
+          type = type, forward = forward, strike = strike.vec[k], texp = texp, sigma = sigma
         )[1] - price.forward[k]
         return(f)
       }
