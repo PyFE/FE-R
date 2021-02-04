@@ -1,15 +1,15 @@
 #' Hagan approximation for the SABR model
 #'
-#' @param strike
-#' @param spot
-#' @param forward
-#' @param t.exp
-#' @param sigma
+#' @param strike strike price
+#' @param spot current stock price
+#' @param forward forward stock price
+#' @param texp time to expiry
+#' @param sigma volatility
 #' @param vov
 #' @param rho
 #' @param beta
-#' @param r
-#' @param div
+#' @param intr interest rate
+#' @param divr dividend rate
 #' @param type 'BlackScholes', 'call', 'put'
 #'
 #' @return Black-Scholes volatility (type="BlackScholes") or option price ("call" or "put")
@@ -17,9 +17,9 @@
 #'
 #' @examples
 SabrHagan2002 <- function(
-  strike, spot, forward = spot*exp((r-div)*t.exp),
-  t.exp=1, sigma=0.01, vov=0, rho=0, beta=1,
-  r = 0, div = 0, type="BlackScholes"
+  strike, spot, forward = spot*exp((intr-divr)*texp),
+  texp=1, sigma=0.01, vov=0, rho=0, beta=1,
+  intr = 0, divr = 0, type="BlackScholes"
 ){
   betac <- 1 - beta
   powFwdStrk <- (forward*strike)^(betac/2)
@@ -32,7 +32,7 @@ SabrHagan2002 <- function(
   pre2alp1 <- vov*rho*beta/4/powFwdStrk
   pre2alp2 <- betac^2/24/powFwdStrk^2
 
-  pre2 <- 1 + t.exp*( pre2alp0 + sigma*(pre2alp1 + pre2alp2*sigma) )
+  pre2 <- 1 + texp*( pre2alp0 + sigma*(pre2alp1 + pre2alp2*sigma) )
 
   zz <- powFwdStrk*logFwdStrk*vov/sigma  # need to make sure sig > 0
   yy <- sqrt(1 + zz*(zz-2*rho))
@@ -51,8 +51,8 @@ SabrHagan2002 <- function(
     return(volBlks)
   } else if(type=="call" | type=="put") {
     p <- BlackScholesPrice(
-      type=type, spot=spot, strike=strike, t.exp=t.exp, sigma=volBlks,
-      r=r, div=div
+      type=type, spot=spot, strike=strike, texp=texp, sigma=volBlks,
+      intr=intr, divr=divr
     )
     return(p)
   }

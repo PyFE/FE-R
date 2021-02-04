@@ -7,11 +7,11 @@
 BachelierPrice(
   type = "call",
   spot,
-  forward = spot * exp((r - div) * t.exp),
+  forward = spot * exp((intr - divr) * texp),
   strike = forward,
-  t.exp = 1,
-  r = 0,
-  div = 0,
+  texp = 1,
+  intr = 0,
+  divr = 0,
   sigma
 )
 }
@@ -22,11 +22,11 @@ BachelierPrice(
 
 \item{forward}{forward stock price}
 
-\item{t.exp}{time to expiry}
+\item{texp}{time to expiry}
 
-\item{r}{interest rate}
+\item{intr}{interest rate}
 
-\item{div}{dividend rate}
+\item{divr}{dividend rate}
 
 \item{sigma}{volatility}
 
@@ -41,8 +41,8 @@ Calculate Bachelier model option price
 \examples{
 spot <- 100
 strike <- seq(80,125,5)
-t.exp <- 1.2
+texp <- 1.2
 sigma <- 0.2
-r <- 0.05
-price <- FER::BachelierPrice(spot=spot, t.exp = t.exp, sigma=sigma, strike=strike, r=r)
+intr <- 0.05
+price <- FER::BachelierPrice(spot=spot, texp = texp, sigma=sigma, strike=strike, intr=intr)
 }

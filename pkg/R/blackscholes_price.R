@@ -4,24 +4,24 @@
 #' @param spot current stock price
 #' @param forward forward stock price
 #' @param strike strike price
-#' @param t.exp time to expiry
-#' @param r interest rate
-#' @param div dividend rate
+#' @param texp time to expiry
+#' @param intr interest rate
+#' @param divr dividend rate
 #' @param sigma volatility
 #' @return option price
 #' @examples
 #' spot <- 100
 #' strike <- seq(80,125,5)
-#' t.exp <- 1.2
+#' texp <- 1.2
 #' sigma <- 0.2
-#' r <- 0.05
-#' price <- FER::BlackScholesPrice(spot=spot, t.exp = t.exp, sigma=sigma, strike=strike, r=r)
+#' intr <- 0.05
+#' price <- FER::BlackScholesPrice(spot=spot, texp = texp, sigma=sigma, strike=strike, intr=intr)
 #' @export
 BlackScholesPrice <- function(
-  type = "call", spot, forward = spot*exp((r-div)*t.exp),
-  strike = forward, t.exp = 1, r = 0, div = 0, sigma
+  type = "call", spot, forward = spot*exp((intr-divr)*texp),
+  strike = forward, texp = 1, intr = 0, divr = 0, sigma
 ){
-    stdev <- sigma*sqrt(t.exp)
+    stdev <- sigma*sqrt(texp)
 
     # a trick to get the intrinsic value for negative or zero vol
     # also avoid NAN in case forward = strike
@@ -29,7 +29,7 @@ BlackScholesPrice <- function(
 
     d1 <- log(forward/strike)/stdev + 0.5*stdev
     d2 <- d1 - stdev
-    disc.factor <- exp(-r*t.exp)
+    disc.factor <- exp(-intr*texp)
 
     pnorm.d1 <- pnorm(d1)
     pnorm.d2 <- pnorm(d2)

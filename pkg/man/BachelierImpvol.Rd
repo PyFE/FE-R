@@ -8,11 +8,11 @@ BachelierImpvol(
   type = "call",
   price,
   spot,
-  forward = spot * exp((r - div) * t.exp),
+  forward = spot * exp((intr - divr) * texp),
   strike = forward,
-  t.exp = 1,
-  r = 0,
-  div = 0
+  texp = 1,
+  intr = 0,
+  divr = 0
 )
 }
 \arguments{
@@ -26,11 +26,11 @@ BachelierImpvol(
 
 \item{strike}{strike price}
 
-\item{t.exp}{time to expiry}
+\item{texp}{time to expiry}
 
-\item{r}{interest rate}
+\item{intr}{interest rate}
 
-\item{div}{dividend rate}
+\item{divr}{dividend rate}
 }
 \value{
 implied vol
@@ -41,9 +41,9 @@ Calculate Bachelier model implied volatility
 \examples{
 spot <- 100
 strike <- 100
-t.exp <- 1.2
+texp <- 1.2
 sigma <- 0.2
-r <- 0.05
+intr <- 0.05
 price <- 20
-vol <- FER::BachelierImpvol(price=price, spot=spot, strike=strike, t.exp=t.exp, r=r)
+vol <- FER::BachelierImpvol(price=price, spot=spot, strike=strike, texp=texp, intr=intr)
 }
