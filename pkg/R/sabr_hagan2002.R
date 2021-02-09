@@ -10,8 +10,8 @@
 #' @param intr interest rate
 #' @param divr dividend rate
 #' @param cpsign call/put sign. NULL for BS vol (default), 1 for call price, -1 for put price.
-#' @param forward forward price. If given, forward overrides spot
-#' @param df discount factor. If given, df overrides intr
+#' @param forward forward price. If given, \code{forward} overrides \code{spot}
+#' @param df discount factor. If given, \code{df} overrides \code{intr}
 #' @return BS volatility or option price based on cpsign
 #'
 #' @references Hagan, P. S., Kumar, D., Lesniewski, A. S., & Woodward, D. E. (2002). Managing Smile Risk. Wilmott, September, 84–108.

@@ -7,8 +7,8 @@
 #' @param intr interest rate
 #' @param divr dividend rate
 #' @param cpsign call/put sign. 1 for call, -1 for put.
-#' @param forward forward price. If given, forward overrides spot
-#' @param df discount factor. If given, df overrides intr
+#' @param forward forward price. If given, \code{forward} overrides \code{spot}
+#' @param df discount factor. If given, \code{df} overrides \code{intr}
 #' @return Bachelier implied volatility
 #'
 #' @references Choi, J., Kim, K., & Kwak, M. (2009). Numerical Approximation of the Implied Volatility Under Arithmetic Brownian Motion. Applied Mathematical Finance, 16(3), 261–268.
@@ -24,6 +24,8 @@
 #' intr <- 0.05
 #' price <- 20
 #' vol <- FER::BachelierImpvol(price, strike, spot, texp, intr=intr)
+#'
+#' @seealso \code{\link{BachelierPrice}}
 #'
 BachelierImpvol <- function(
   price, strike = forward, spot, texp = 1,

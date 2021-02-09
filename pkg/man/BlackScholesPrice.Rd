@@ -29,11 +29,11 @@ BlackScholesPrice(
 
 \item{divr}{dividend rate}
 
-\item{forward}{forward price. If given, forward overrides spot}
+\item{cpsign}{call/put sign. 1 for call, -1 for put.}
 
-\item{df}{discount factor. If given, df overrides intr}
+\item{forward}{forward price. If given, \code{forward} overrides \code{spot}}
 
-\item{type}{option type either 'call' or 'put'}
+\item{df}{discount factor. If given, \code{df} overrides \code{intr}}
 }
 \value{
 option price
@@ -49,4 +49,7 @@ sigma <- 0.2
 intr <- 0.05
 price <- FER::BlackScholesPrice(strike, spot, texp, sigma, intr=intr)
 
+}
+\seealso{
+\code{\link{BlackScholesImpvol}}
 }

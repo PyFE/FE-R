@@ -6,9 +6,9 @@
 #' @param sigma (vector of) volatility
 #' @param intr interest rate
 #' @param divr dividend rate
-#' @param type option type either 'call' or 'put'
-#' @param forward forward price. If given, forward overrides spot
-#' @param df discount factor. If given, df overrides intr
+#' @param cpsign call/put sign. 1 for call, -1 for put.
+#' @param forward forward price. If given, \code{forward} overrides \code{spot}
+#' @param df discount factor. If given, \code{df} overrides \code{intr}
 #' @return option price
 #'
 #' @export
@@ -20,6 +20,8 @@
 #' sigma <- 0.2
 #' intr <- 0.05
 #' price <- FER::BlackScholesPrice(strike, spot, texp, sigma, intr=intr)
+#'
+#' @seealso \code{\link{BlackScholesImpvol}}
 #'
 BlackScholesPrice <- function(
   strike = forward, spot, texp = 1, sigma,
