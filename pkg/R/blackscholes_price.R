@@ -1,25 +1,31 @@
 #' Calculate Black-Scholes option price
 #'
-#' @param type option type either 'call' or 'put'
-#' @param spot current stock price
-#' @param forward forward stock price
-#' @param strike strike price
-#' @param texp time to expiry
+#' @param strike (vector of) strike price
+#' @param spot (vector of) spot price
+#' @param texp (vector of) time to expiry
+#' @param sigma (vector of) volatility
 #' @param intr interest rate
 #' @param divr dividend rate
-#' @param sigma volatility
+#' @param type option type either 'call' or 'put'
+#' @param forward forward price. If given, forward overrides spot
+#' @param df discount factor. If given, df overrides intr
 #' @return option price
+#'
+#' @export
+#'
 #' @examples
 #' spot <- 100
 #' strike <- seq(80,125,5)
 #' texp <- 1.2
 #' sigma <- 0.2
 #' intr <- 0.05
-#' price <- FER::BlackScholesPrice(spot=spot, texp = texp, sigma=sigma, strike=strike, intr=intr)
-#' @export
+#' price <- FER::BlackScholesPrice(strike, spot, texp, sigma, intr=intr)
+#'
 BlackScholesPrice <- function(
-  type = "call", spot, forward = spot*exp((intr-divr)*texp),
-  strike = forward, texp = 1, intr = 0, divr = 0, sigma
+  strike = forward, spot, texp = 1, sigma,
+  intr = 0, divr = 0, cpsign = 1,
+  forward = spot*exp(-divr*texp)/df,
+  df = exp(-intr*texp)
 ){
     stdev <- sigma*sqrt(texp)
 
@@ -30,22 +36,6 @@ BlackScholesPrice <- function(
     d1 <- log(forward/strike)/stdev + 0.5*stdev
     d2 <- d1 - stdev
     disc.factor <- exp(-intr*texp)
-
-    pnorm.d1 <- pnorm(d1)
-    pnorm.d2 <- pnorm(d2)
-
-    if (type == "call" ){
-        price <- forward*pnorm.d1 - strike*pnorm.d2
-        delta <- pnorm.d1
-    }else if (type == "put"){
-        price <- strike*(1-pnorm.d2) - forward*(1-pnorm.d1)
-        delta <- pnorm.d1 - 1
-    }else if (type == "straddle"){
-        price <- forward*(2*pnorm.d1 - 1) - strike*(2*pnorm.d2 - 1)
-        delta <- 2*pnorm.d1 - 1
-    }else if (type == "digit"){
-        price <- pnorm.d2
-        delta <- 1/sqrt(2*pi)*exp(-d2^2/2)/(s*stdev)
-    }
-    return( disc.factor * price )
+    price <- df * cpsign*(forward*pnorm(cpsign*d1) - strike*pnorm(cpsign*d2))
+    return( price )
 }
