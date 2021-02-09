@@ -34,9 +34,9 @@ CevPrice(
 
 \item{cpsign}{call/put sign. 1 for call, -1 for put.}
 
-\item{forward}{forward price. If given, forward overrides spot}
+\item{forward}{forward price. If given, \code{forward} overrides \code{spot}}
 
-\item{df}{discount factor. If given, df overrides intr}
+\item{df}{discount factor. If given, \code{df} overrides \code{intr}}
 }
 \value{
 option price

@@ -40,9 +40,9 @@ SabrHagan2002(
 
 \item{cpsign}{call/put sign. NULL for BS vol (default), 1 for call price, -1 for put price.}
 
-\item{forward}{forward price. If given, forward overrides spot}
+\item{forward}{forward price. If given, \code{forward} overrides \code{spot}}
 
-\item{df}{discount factor. If given, df overrides intr}
+\item{df}{discount factor. If given, \code{df} overrides \code{intr}}
 }
 \value{
 BS volatility or option price based on cpsign

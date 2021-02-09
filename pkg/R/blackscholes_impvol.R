@@ -7,8 +7,8 @@
 #' @param intr interest rate
 #' @param divr dividend rate
 #' @param cpsign call/put sign. 1 for call, -1 for put.
-#' @param forward forward price. If given, forward overrides spot
-#' @param df discount factor. If given, df overrides intr
+#' @param forward forward price. If given, \code{forward} overrides \code{spot}
+#' @param df discount factor. If given, \code{df} overrides \code{intr}
 #' @return Black-Scholes implied volatility
 #'
 #' @export
@@ -21,6 +21,8 @@
 #' intr <- 0.05
 #' price <- 20
 #' vol <- FER::BlackScholesImpvol(price, strike, spot, texp, intr=intr)
+#'
+#' @seealso \code{\link{BlackScholesPrice}}
 #'
 BlackScholesImpvol <- function(
   price, strike = forward, spot, texp = 1,

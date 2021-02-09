@@ -31,9 +31,9 @@ BachelierPrice(
 
 \item{cpsign}{call/put sign. 1 for call, -1 for put.}
 
-\item{forward}{forward price. If given, forward overrides spot}
+\item{forward}{forward price. If given, \code{forward} overrides \code{spot}}
 
-\item{df}{discount factor. If given, df overrides intr}
+\item{df}{discount factor. If given, \code{df} overrides \code{intr}}
 }
 \value{
 option price
@@ -49,4 +49,7 @@ sigma <- 20
 intr <- 0.05
 price <- FER::BachelierPrice(strike, spot, texp, sigma, intr=intr)
 
+}
+\seealso{
+\code{\link{BachelierImpvol}}
 }

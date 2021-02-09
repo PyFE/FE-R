@@ -31,9 +31,9 @@ BachelierImpvol(
 
 \item{cpsign}{call/put sign. 1 for call, -1 for put.}
 
-\item{forward}{forward price. If given, forward overrides spot}
+\item{forward}{forward price. If given, \code{forward} overrides \code{spot}}
 
-\item{df}{discount factor. If given, df overrides intr}
+\item{df}{discount factor. If given, \code{df} overrides \code{intr}}
 }
 \value{
 Bachelier implied volatility
@@ -54,4 +54,7 @@ vol <- FER::BachelierImpvol(price, strike, spot, texp, intr=intr)
 \references{
 Choi, J., Kim, K., & Kwak, M. (2009). Numerical Approximation of the Implied Volatility Under Arithmetic Brownian Motion. Applied Mathematical Finance, 16(3), 261–268.
   \url{https://doi.org/10.1080/13504860802583436}
+}
+\seealso{
+\code{\link{BachelierPrice}}
 }
