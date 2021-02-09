@@ -1,25 +1,37 @@
 #' Hagan approximation for the SABR model
 #'
-#' @param strike strike price
-#' @param spot current stock price
-#' @param forward forward stock price
-#' @param texp time to expiry
-#' @param sigma volatility
-#' @param vov
-#' @param rho
-#' @param beta
+#' @param strike (vector of) strike price
+#' @param spot (vector of) spot price
+#' @param texp (vector of) time to expiry
+#' @param sigma (vector of) volatility
+#' @param vov vol-of-vol
+#' @param rho correlation
+#' @param beta beta
 #' @param intr interest rate
 #' @param divr dividend rate
-#' @param type 'BlackScholes', 'call', 'put'
+#' @param cpsign call/put sign. NULL for BS vol (default), 1 for call price, -1 for put price.
+#' @param forward forward price. If given, forward overrides spot
+#' @param df discount factor. If given, df overrides intr
+#' @return BS volatility or option price based on cpsign
 #'
-#' @return Black-Scholes volatility (type="BlackScholes") or option price ("call" or "put")
+#' @references Hagan, P. S., Kumar, D., Lesniewski, A. S., & Woodward, D. E. (2002). Managing Smile Risk. Wilmott, September, 84–108.
+#'
 #' @export
 #'
 #' @examples
+#' sigma <- 0.25
+#' vov <- 0.3
+#' rho <- -0.8
+#' beta <- 0.3
+#' texp <- 10
+#' strike <- seq(0.1, 2, 0.1)
+#' FER::SabrHagan2002(strike, 1, texp, sigma, vov, rho, beta)
+#'
 SabrHagan2002 <- function(
-  strike, spot, forward = spot*exp((intr-divr)*texp),
-  texp=1, sigma=0.01, vov=0, rho=0, beta=1,
-  intr = 0, divr = 0, type="BlackScholes"
+  strike = forward, spot, texp = 1, sigma, vov=0, rho=0, beta=1,
+  intr = 0, divr = 0, cpsign = NULL,
+  forward = spot*exp(-divr*texp)/df,
+  df = exp(-intr*texp)
 ){
   betac <- 1 - beta
   powFwdStrk <- (forward*strike)^(betac/2)
@@ -38,22 +50,19 @@ SabrHagan2002 <- function(
   yy <- sqrt(1 + zz*(zz-2*rho))
 
   rho2 <- rho*rho
-  xx_zz[I] = 1 + (zz/2)*(rho + zz*((rho2-1/3) + (5*rho2-3)/4*rho*zz))
+  xx_zz = 1 + (zz/2)*(rho + zz*((rho2-1/3) + (5*rho2-3)/4*rho*zz))
 
   I <- (zz >= 1e-5)
   xx_zz[I] = log( (yy[I] + (zz[I]-rho))/(1-rho) ) / zz[I]
   I <- (zz <= -1e-5)
   xx_zz[I] = log( (1+rho)/(yy[I] - (zz[I]-rho)) ) / zz[I]
 
-  volBlks = sigma*pre2/(pre1*xx_zz) # blks vol
+  vol.bs = sigma*pre2/(pre1*xx_zz) # blks vol
 
-  if(type=="BlackScholes"){
-    return(volBlks)
-  } else if(type=="call" | type=="put") {
-    p <- BlackScholesPrice(
-      type=type, spot=spot, strike=strike, texp=texp, sigma=volBlks,
-      intr=intr, divr=divr
-    )
-    return(p)
+  if(is.null(cpsign)){
+    return(vol.bs)
+  } else {
+    p <- BlackScholesPrice(strike, forward, texp, vol.bs, cpsign=cpsign)
+    return(df*p)
   }
 }

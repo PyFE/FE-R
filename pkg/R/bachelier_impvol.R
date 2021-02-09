@@ -1,37 +1,37 @@
 #' Calculate Bachelier model implied volatility
 #'
-#' @param type option type either 'call' or 'put'
-#' @param price Price
-#' @param spot current stock price
-#' @param forward forward stock price
-#' @param strike strike price
-#' @param texp time to expiry
+#' @param price (vector of) option price
+#' @param strike (vector of) strike price
+#' @param spot (vector of) spot price
+#' @param texp (vector of) time to expiry
 #' @param intr interest rate
 #' @param divr dividend rate
-#' @return implied vol
+#' @param cpsign call/put sign. 1 for call, -1 for put.
+#' @param forward forward price. If given, forward overrides spot
+#' @param df discount factor. If given, df overrides intr
+#' @return Bachelier implied volatility
+#'
+#' @references Choi, J., Kim, K., & Kwak, M. (2009). Numerical Approximation of the Implied Volatility Under Arithmetic Brownian Motion. Applied Mathematical Finance, 16(3), 261–268. https://doi.org/10.1080/13504860802583436
+#'
+#' @export
+#'
 #' @examples
 #' spot <- 100
 #' strike <- 100
 #' texp <- 1.2
-#' sigma <- 0.2
+#' sigma <- 20
 #' intr <- 0.05
 #' price <- 20
-#' vol <- FER::BachelierImpvol(price=price, spot=spot, strike=strike, texp=texp, intr=intr)
-#' @export
+#' vol <- FER::BachelierImpvol(price, strike, spot, texp, intr=intr)
+#'
 BachelierImpvol <- function(
-  type = "call", price, spot, forward = spot*exp((intr-divr)*texp),
-  strike = forward, texp = 1, intr = 0, divr = 0
+  price, strike = forward, spot, texp = 1,
+  intr = 0, divr = 0, cpsign = 1,
+  forward = spot*exp(-divr*texp)/df,
+  df = exp(-intr*texp)
 ){
 
-  price.forward = price * exp(intr*texp)
-
-  if( type == "call" ) {
-    price.straddle <- 2*price.forward - (forward - strike)
-  } else if( type == "put" ) {
-    price.straddle <- 2*price.forward + (forward - strike)
-  } else if( type == "straddle") {
-    price.straddle <- price.forward
-  }
+  price.straddle = 2*price/df - cpsign*(forward - strike)
 
   # vectors a and b used for rational Chebyshev approximation
   a <- c(3.994961687345134e-1,
@@ -54,24 +54,14 @@ BachelierImpvol <- function(
       -2.067719486400926e2,
        1.174240599306013e1)
 
-  #implied volatility when current stock price
-  #is different from the strike price
-
-  #variable v which is bounded in the range [-1, 1],
-  #since the straddle price is always worth more
-  #than the intrinsic value |F-K|.
   v <- abs( forward - strike ) / price.straddle
-  #transformation of v used for better
-  #approximation of h
 
   nu <- ifelse(v<1e-8, 1/(1+v*v*(1/3 + v*v/5)), v/atanh(v))
 
-  poly.a <- (((((((a[8]*nu+a[7])*nu+a[6])*nu+a[5]))*nu+a[4])*nu+a[3])*nu+a[2])*nu+a[1]
-  poly.b <- (((((((((b[10]*nu+b[9])*nu+b[8])*nu+b[7]))*nu+b[6])*nu+b[5])*nu+b[4])*nu+b[3])*nu+b[2])*nu+b[1]
+  poly.nu <- (((((((a[8]*nu+a[7])*nu+a[6])*nu+a[5]))*nu+a[4])*nu+a[3])*nu+a[2])*nu+a[1]
+  poly.de <- (((((((((b[10]*nu+b[9])*nu+b[8])*nu+b[7]))*nu+b[6])*nu+b[5])*nu+b[4])*nu+b[3])*nu+b[2])*nu+b[1]
 
-  #approximation of h(n)
-  #implied volatility
-  vol <- sqrt(pi*nu/(2*texp)) * price.straddle * (poly.a/poly.b)
+  vol.norm <- sqrt(pi*nu/(2*texp)) * price.straddle * (poly.nu/poly.de)
 
-  return(vol)
+  return(vol.norm)
 }

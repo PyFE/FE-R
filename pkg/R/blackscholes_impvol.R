@@ -1,14 +1,18 @@
 #' Calculate Black-Scholes implied volatility
 #'
-#' @param type option type either 'call' or 'put'
-#' @param price Price
-#' @param spot current stock price
-#' @param forward forward stock price
-#' @param strike strike price
-#' @param texp time to expiry
+#' @param price (vector of) option price
+#' @param strike (vector of) strike price
+#' @param spot (vector of) spot price
+#' @param texp (vector of) time to expiry
 #' @param intr interest rate
 #' @param divr dividend rate
-#' @return Implied vol
+#' @param cpsign call/put sign. 1 for call, -1 for put.
+#' @param forward forward price. If given, forward overrides spot
+#' @param df discount factor. If given, df overrides intr
+#' @return Black-Scholes implied volatility
+#'
+#' @export
+#'
 #' @examples
 #' spot <- 100
 #' strike <- 100
@@ -16,35 +20,19 @@
 #' sigma <- 0.2
 #' intr <- 0.05
 #' price <- 20
-#' vol <- FER::BlackScholesImpvol(price=price, spot=spot, strike=strike, texp=texp, intr=intr)
-#' @export
+#' vol <- FER::BlackScholesImpvol(price, strike, spot, texp, intr=intr)
+#'
 BlackScholesImpvol <- function(
-  type = "call", price, spot, forward = spot*exp((intr-div)*texp),
-  strike = forward, texp = 1, intr = 0, divr = 0
+  price, strike = forward, spot, texp = 1,
+  intr = 0, divr = 0, cpsign = 1,
+  forward = spot*exp(-divr*texp)/df,
+  df = exp(-intr*texp)
 ){
-    price.forward = price * exp( r*texp)
+  optval = (price/df - pmax(cpsign*(forward-strike), 0))/pmin(forward, strike)
 
-    n.price = length(price.forward)
-    n.strike = length(strike)
-
-    vol <- rep(NA, n.price )
-
-    if( length(strike) > 1L ) {
-      stopifnot(n.price == n.strike )
-      strike.vec <- strike
-    } else {
-      strike.vec <- rep( strike, n.price )
-    }
-
-    for(k in 1:n.price) {
-      # Be careful here.... Chekc how functional works in R.
-      sub <- function(sigma){
-        f <- CalcBsmPrice(
-          type = type, forward = forward, strike = strike.vec[k], texp = texp, sigma = sigma
-        )[1] - price.forward[k]
-        return(f)
-      }
-      vol[k] <- uniroot(f = sub,interval = c(0,10), tol = .Machine$double.eps * 1e4)$root
-    }
-    return(vol)
+  # we use inverse CDF of inversegaussian distribution
+  mu <- 2/abs(log(strike/forward))
+  x <- statmod::qinvgauss(optval, mean=mu, lower.tail=F)
+  sig <- 2/sqrt(x*texp)
+  return( sig )
 }
