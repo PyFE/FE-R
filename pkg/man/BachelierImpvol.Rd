@@ -5,35 +5,38 @@
 \title{Calculate Bachelier model implied volatility}
 \usage{
 BachelierImpvol(
-  type = "call",
   price,
-  spot,
-  forward = spot * exp((intr - divr) * texp),
   strike = forward,
+  spot,
   texp = 1,
   intr = 0,
-  divr = 0
+  divr = 0,
+  cpsign = 1,
+  forward = spot * exp(-divr * texp)/df,
+  df = exp(-intr * texp)
 )
 }
 \arguments{
-\item{type}{option type either 'call' or 'put'}
+\item{price}{(vector of) option price}
 
-\item{price}{Price}
+\item{strike}{(vector of) strike price}
 
-\item{spot}{current stock price}
+\item{spot}{(vector of) spot price}
 
-\item{forward}{forward stock price}
-
-\item{strike}{strike price}
-
-\item{texp}{time to expiry}
+\item{texp}{(vector of) time to expiry}
 
 \item{intr}{interest rate}
 
 \item{divr}{dividend rate}
+
+\item{cpsign}{call/put sign. 1 for call, -1 for put.}
+
+\item{forward}{forward price. If given, forward overrides spot}
+
+\item{df}{discount factor. If given, df overrides intr}
 }
 \value{
-implied vol
+Bachelier implied volatility
 }
 \description{
 Calculate Bachelier model implied volatility
@@ -42,8 +45,12 @@ Calculate Bachelier model implied volatility
 spot <- 100
 strike <- 100
 texp <- 1.2
-sigma <- 0.2
+sigma <- 20
 intr <- 0.05
 price <- 20
-vol <- FER::BachelierImpvol(price=price, spot=spot, strike=strike, texp=texp, intr=intr)
+vol <- FER::BachelierImpvol(price, strike, spot, texp, intr=intr)
+
+}
+\references{
+Choi, J., Kim, K., & Kwak, M. (2009). Numerical Approximation of the Implied Volatility Under Arithmetic Brownian Motion. Applied Mathematical Finance, 16(3), 261–268. https://doi.org/10.1080/13504860802583436
 }

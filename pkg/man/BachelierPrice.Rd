@@ -5,32 +5,35 @@
 \title{Calculate Bachelier model option price}
 \usage{
 BachelierPrice(
-  type = "call",
-  spot,
-  forward = spot * exp((intr - divr) * texp),
   strike = forward,
+  spot,
   texp = 1,
+  sigma,
   intr = 0,
   divr = 0,
-  sigma
+  cpsign = 1,
+  forward = spot * exp(-divr * texp)/df,
+  df = exp(-intr * texp)
 )
 }
 \arguments{
-\item{type}{option type either "call" or "put"}
+\item{strike}{(vector of) strike price}
 
-\item{spot}{current stock price}
+\item{spot}{(vector of) spot price}
 
-\item{forward}{forward stock price}
+\item{texp}{(vector of) time to expiry}
 
-\item{texp}{time to expiry}
+\item{sigma}{(vector of) volatility}
 
 \item{intr}{interest rate}
 
 \item{divr}{dividend rate}
 
-\item{sigma}{volatility}
+\item{cpsign}{call/put sign. 1 for call, -1 for put.}
 
-\item{price}{Price}
+\item{forward}{forward price. If given, forward overrides spot}
+
+\item{df}{discount factor. If given, df overrides intr}
 }
 \value{
 option price
@@ -42,7 +45,8 @@ Calculate Bachelier model option price
 spot <- 100
 strike <- seq(80,125,5)
 texp <- 1.2
-sigma <- 0.2
+sigma <- 20
 intr <- 0.05
-price <- FER::BachelierPrice(spot=spot, texp = texp, sigma=sigma, strike=strike, intr=intr)
+price <- FER::BachelierPrice(strike, spot, texp, sigma, intr=intr)
+
 }

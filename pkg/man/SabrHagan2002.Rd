@@ -5,39 +5,61 @@
 \title{Hagan approximation for the SABR model}
 \usage{
 SabrHagan2002(
-  strike,
+  strike = forward,
   spot,
-  forward = spot * exp((intr - divr) * texp),
   texp = 1,
-  sigma = 0.01,
+  sigma,
   vov = 0,
   rho = 0,
   beta = 1,
   intr = 0,
   divr = 0,
-  type = "BlackScholes"
+  cpsign = NULL,
+  forward = spot * exp(-divr * texp)/df,
+  df = exp(-intr * texp)
 )
 }
 \arguments{
-\item{strike}{strike price}
+\item{strike}{(vector of) strike price}
 
-\item{spot}{current stock price}
+\item{spot}{(vector of) spot price}
 
-\item{forward}{forward stock price}
+\item{texp}{(vector of) time to expiry}
 
-\item{texp}{time to expiry}
+\item{sigma}{(vector of) volatility}
 
-\item{sigma}{volatility}
+\item{vov}{vol-of-vol}
+
+\item{rho}{correlation}
+
+\item{beta}{beta}
 
 \item{intr}{interest rate}
 
 \item{divr}{dividend rate}
 
-\item{type}{'BlackScholes', 'call', 'put'}
+\item{cpsign}{call/put sign. NULL for BS vol (default), 1 for call price, -1 for put price.}
+
+\item{forward}{forward price. If given, forward overrides spot}
+
+\item{df}{discount factor. If given, df overrides intr}
 }
 \value{
-Black-Scholes volatility (type="BlackScholes") or option price ("call" or "put")
+BS volatility or option price based on cpsign
 }
 \description{
 Hagan approximation for the SABR model
+}
+\examples{
+sigma <- 0.25
+vov <- 0.3
+rho <- -0.8
+beta <- 0.3
+texp <- 10
+strike <- seq(0.1, 2, 0.1)
+FER::SabrHagan2002(strike, 1, texp, sigma, vov, rho, beta)
+
+}
+\references{
+Hagan, P. S., Kumar, D., Lesniewski, A. S., & Woodward, D. E. (2002). Managing Smile Risk. Wilmott, September, 84–108.
 }
