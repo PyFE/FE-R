@@ -6,10 +6,14 @@
 #' @param texp (vector of) time to expiry
 #' @param intr interest rate
 #' @param divr dividend rate
-#' @param cpsign call/put sign. 1 for call, -1 for put.
+#' @param cp call/put sign. \code{1} for call, \code{-1} for put.
 #' @param forward forward price. If given, \code{forward} overrides \code{spot}
 #' @param df discount factor. If given, \code{df} overrides \code{intr}
 #' @return Black-Scholes implied volatility
+#'
+#' @references Giner, G., & Smyth, G. K. (2016). statmod: Probability Calculations
+#'   for the Inverse Gaussian Distribution. The R Journal, 8(1), 339-351.
+#'   \url{https://doi.org/10.32614/RJ-2016-024}
 #'
 #' @export
 #'
@@ -20,17 +24,16 @@
 #' sigma <- 0.2
 #' intr <- 0.05
 #' price <- 20
-#' vol <- FER::BlackScholesImpvol(price, strike, spot, texp, intr=intr)
+#' FER::BlackScholesImpvol(price, strike, spot, texp, intr=intr)
 #'
 #' @seealso \code{\link{BlackScholesPrice}}
 #'
 BlackScholesImpvol <- function(
-  price, strike = forward, spot, texp = 1,
-  intr = 0, divr = 0, cpsign = 1,
-  forward = spot*exp(-divr*texp)/df,
-  df = exp(-intr*texp)
+  price, strike=forward, spot, texp=1,
+  intr=0, divr=0, cp=1L,
+  forward=spot*exp(-divr*texp)/df, df=exp(-intr*texp)
 ){
-  optval = (price/df - pmax(cpsign*(forward-strike), 0))/pmin(forward, strike)
+  optval <- (price/df - pmax(cp*(forward-strike), 0))/pmin(forward, strike)
 
   # we use inverse CDF of inversegaussian distribution
   mu <- 2/abs(log(strike/forward))

@@ -2,7 +2,8 @@
 % Please edit documentation in R/sabr_hagan2002.R
 \name{SabrHagan2002}
 \alias{SabrHagan2002}
-\title{Hagan approximation for the SABR model}
+\title{Calculate the equivalent BS volatility (Hagan et al. 2002) for
+  the Stochatic-Alpha-Beta-Rho (SABR) model}
 \usage{
 SabrHagan2002(
   strike = forward,
@@ -14,7 +15,7 @@ SabrHagan2002(
   beta = 1,
   intr = 0,
   divr = 0,
-  cpsign = NULL,
+  cp = NULL,
   forward = spot * exp(-divr * texp)/df,
   df = exp(-intr * texp)
 )
@@ -28,27 +29,28 @@ SabrHagan2002(
 
 \item{sigma}{(vector of) volatility}
 
-\item{vov}{vol-of-vol}
+\item{vov}{(vector of) vol-of-vol}
 
-\item{rho}{correlation}
+\item{rho}{(vector of) correlation}
 
-\item{beta}{beta}
+\item{beta}{(vector of) beta}
 
 \item{intr}{interest rate}
 
 \item{divr}{dividend rate}
 
-\item{cpsign}{call/put sign. NULL for BS vol (default), 1 for call price, -1 for put price.}
+\item{cp}{call/put sign. \code{NULL} for BS vol (default), \code{1} for call price, \code{-1} for put price.}
 
 \item{forward}{forward price. If given, \code{forward} overrides \code{spot}}
 
 \item{df}{discount factor. If given, \code{df} overrides \code{intr}}
 }
 \value{
-BS volatility or option price based on cpsign
+BS volatility or option price based on \code{cp}
 }
 \description{
-Hagan approximation for the SABR model
+Calculate the equivalent BS volatility (Hagan et al. 2002) for
+  the Stochatic-Alpha-Beta-Rho (SABR) model
 }
 \examples{
 sigma <- 0.25
@@ -58,8 +60,10 @@ beta <- 0.3
 texp <- 10
 strike <- seq(0.1, 2, 0.1)
 FER::SabrHagan2002(strike, 1, texp, sigma, vov, rho, beta)
+FER::SabrHagan2002(strike, 1, texp, sigma, vov, rho, beta, cp=1)
 
 }
 \references{
-Hagan, P. S., Kumar, D., Lesniewski, A. S., & Woodward, D. E. (2002). Managing Smile Risk. Wilmott, September, 84–108.
+Hagan, P. S., Kumar, D., Lesniewski, A. S., & Woodward, D. E. (2002).
+  Managing Smile Risk. Wilmott, September, 84-108.
 }

@@ -6,12 +6,14 @@
 #' @param texp (vector of) time to expiry
 #' @param intr interest rate
 #' @param divr dividend rate
-#' @param cpsign call/put sign. 1 for call, -1 for put.
+#' @param cp call/put sign. \code{1} for call, \code{-1} for put.
 #' @param forward forward price. If given, \code{forward} overrides \code{spot}
 #' @param df discount factor. If given, \code{df} overrides \code{intr}
 #' @return Bachelier implied volatility
 #'
-#' @references Choi, J., Kim, K., & Kwak, M. (2009). Numerical Approximation of the Implied Volatility Under Arithmetic Brownian Motion. Applied Mathematical Finance, 16(3), 261–268.
+#' @references Choi, J., Kim, K., & Kwak, M. (2009).
+#'   Numerical Approximation of the Implied Volatility Under Arithmetic Brownian
+#'   Motion. Applied Mathematical Finance, 16(3), 261-268.
 #'   \url{https://doi.org/10.1080/13504860802583436}
 #'
 #' @export
@@ -23,18 +25,17 @@
 #' sigma <- 20
 #' intr <- 0.05
 #' price <- 20
-#' vol <- FER::BachelierImpvol(price, strike, spot, texp, intr=intr)
+#' FER::BachelierImpvol(price, strike, spot, texp, intr=intr)
 #'
 #' @seealso \code{\link{BachelierPrice}}
 #'
 BachelierImpvol <- function(
-  price, strike = forward, spot, texp = 1,
-  intr = 0, divr = 0, cpsign = 1,
-  forward = spot*exp(-divr*texp)/df,
-  df = exp(-intr*texp)
+  price, strike=forward, spot, texp=1,
+  intr=0, divr=0, cp=1L,
+  forward=spot*exp(-divr*texp)/df, df=exp(-intr*texp)
 ){
 
-  price.straddle = 2*price/df - cpsign*(forward - strike)
+  price.straddle <- 2*price/df - cp*(forward - strike)
 
   # vectors a and b used for rational Chebyshev approximation
   a <- c(3.994961687345134e-1,
