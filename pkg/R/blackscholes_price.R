@@ -10,7 +10,7 @@
 #' @param forward forward price. If given, \code{forward} overrides \code{spot}
 #' @param df discount factor. If given, \code{df} overrides \code{intr}
 #' @return option price
-#'
+#' @import stats
 #' @export
 #'
 #' @examples

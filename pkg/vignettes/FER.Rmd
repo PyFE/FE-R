@@ -1,0 +1,38 @@
+---
+title: "Vignette Title"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{FER}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+```{r setup}
+devtools::load_all()
+library(FER)
+```
+
+# Introduction
+
+This is a personal package. It contains some handy functions that I find useful for my projects.
+
+# Example
+
+You can give some examples here.
+
+```{r}
+# use some R functions here to demonstrate the usage of these functions.
+```
+
+# Other things
+
+Vignette is an interactive document. You can put anything here to guide the reader to use your package. The main difference between vignette and other documents is that it can display your R codes and results to the readers.
+
+Vignette is not necessary (You can upload your package without this). This document must be written in ".md" format and use "knitr" to convert it into other format.
