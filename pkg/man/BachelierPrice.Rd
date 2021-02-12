@@ -11,7 +11,7 @@ BachelierPrice(
   sigma,
   intr = 0,
   divr = 0,
-  cpsign = 1,
+  cp = 1L,
   forward = spot * exp(-divr * texp)/df,
   df = exp(-intr * texp)
 )
@@ -29,7 +29,7 @@ BachelierPrice(
 
 \item{divr}{dividend rate}
 
-\item{cpsign}{call/put sign. 1 for call, -1 for put.}
+\item{cp}{call/put sign. \code{1} for call, \code{-1} for put.}
 
 \item{forward}{forward price. If given, \code{forward} overrides \code{spot}}
 
@@ -47,8 +47,14 @@ strike <- seq(80,125,5)
 texp <- 1.2
 sigma <- 20
 intr <- 0.05
-price <- FER::BachelierPrice(strike, spot, texp, sigma, intr=intr)
+FER::BachelierPrice(strike, spot, texp, sigma, intr=intr)
 
+}
+\references{
+Choi, J., Kim, K., & Kwak, M. (2009).
+  Numerical Approximation of the Implied Volatility Under Arithmetic Brownian
+  Motion. Applied Mathematical Finance, 16(3), 261-268.
+  \url{https://doi.org/10.1080/13504860802583436}
 }
 \seealso{
 \code{\link{BachelierImpvol}}

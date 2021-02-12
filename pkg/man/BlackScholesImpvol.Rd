@@ -11,7 +11,7 @@ BlackScholesImpvol(
   texp = 1,
   intr = 0,
   divr = 0,
-  cpsign = 1,
+  cp = 1L,
   forward = spot * exp(-divr * texp)/df,
   df = exp(-intr * texp)
 )
@@ -29,7 +29,7 @@ BlackScholesImpvol(
 
 \item{divr}{dividend rate}
 
-\item{cpsign}{call/put sign. 1 for call, -1 for put.}
+\item{cp}{call/put sign. \code{1} for call, \code{-1} for put.}
 
 \item{forward}{forward price. If given, \code{forward} overrides \code{spot}}
 
@@ -48,8 +48,13 @@ texp <- 1.2
 sigma <- 0.2
 intr <- 0.05
 price <- 20
-vol <- FER::BlackScholesImpvol(price, strike, spot, texp, intr=intr)
+FER::BlackScholesImpvol(price, strike, spot, texp, intr=intr)
 
+}
+\references{
+Giner, G., & Smyth, G. K. (2016). statmod: Probability Calculations
+  for the Inverse Gaussian Distribution. The R Journal, 8(1), 339-351.
+  \url{https://doi.org/10.32614/RJ-2016-024}
 }
 \seealso{
 \code{\link{BlackScholesPrice}}

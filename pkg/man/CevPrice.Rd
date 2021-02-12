@@ -2,7 +2,7 @@
 % Please edit documentation in R/cev_price.R
 \name{CevPrice}
 \alias{CevPrice}
-\title{Constant Elasticity Of Variance (CEV) model option price}
+\title{Calculate the constant elasticity of variance (CEV) model option price}
 \usage{
 CevPrice(
   strike = forward,
@@ -12,7 +12,7 @@ CevPrice(
   beta = 0.5,
   intr = 0,
   divr = 0,
-  cpsign = 1,
+  cp = 1L,
   forward = spot * exp(-divr * texp)/df,
   df = exp(-intr * texp)
 )
@@ -32,7 +32,7 @@ CevPrice(
 
 \item{divr}{dividend rate}
 
-\item{cpsign}{call/put sign. 1 for call, -1 for put.}
+\item{cp}{call/put sign. \code{1} for call, \code{-1} for put.}
 
 \item{forward}{forward price. If given, \code{forward} overrides \code{spot}}
 
@@ -42,7 +42,7 @@ CevPrice(
 option price
 }
 \description{
-Constant Elasticity Of Variance (CEV) model option price
+Calculate the constant elasticity of variance (CEV) model option price
 }
 \examples{
 spot <- 100
@@ -50,6 +50,11 @@ strike <- seq(80,125,5)
 texp <- 1.2
 beta <- 0.5
 sigma <- 2
-price <- FER::CevPrice(strike, spot, texp, sigma, beta)
+FER::CevPrice(strike, spot, texp, sigma, beta)
 
+}
+\references{
+Schroder, M. (1989). Computing the constant elasticity
+  of variance option pricing formula. Journal of Finance,
+  44(1), 211-219. https://doi.org/10.1111/j.1540-6261.1989.tb02414.x
 }
