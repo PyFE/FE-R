@@ -19,6 +19,5 @@ Imports:
     statmod,
     devtools
 Suggests: 
-    knitr,
-    rmarkdown
-VignetteBuilder: knitr
+    testthat (>= 3.0.0)
+Config/testthat/edition: 3
