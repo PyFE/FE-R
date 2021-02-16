@@ -33,11 +33,13 @@ BlackScholesImpvol <- function(
   intr=0, divr=0, cp=1L,
   forward=spot*exp(-divr*texp)/df, df=exp(-intr*texp)
 ){
-  optval <- (price/df - pmax(cp*(forward-strike), 0))/pmin(forward, strike)
+  timeval <- (price/df - pmax(cp*(forward-strike), 0))/pmin(forward, strike)
+  # when the time value is very slightly negative, we correct to give zero vol.
+  timeval[price>0 & -8*.Machine$double.eps<timeval & timeval<0] <- 0
 
   # we use inverse CDF of inversegaussian distribution
   mu <- 2/abs(log(strike/forward))
-  x <- statmod::qinvgauss(optval, mean=mu, lower.tail=F)
+  x <- statmod::qinvgauss(timeval, mean=mu, lower.tail=F)
   sig <- 2/sqrt(x*texp)
   return( sig )
 }

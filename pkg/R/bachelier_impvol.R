@@ -60,6 +60,8 @@ BachelierImpvol <- function(
 
   v <- abs( forward - strike ) / price.straddle
 
+  # when the time value is very slightly negative, we correct to give zero vol.
+  v[price>0 & 1<v & v<1+8*.Machine$double.eps] <- 1
   nu <- ifelse(v<1e-8, 1/(1+v*v*(1/3 + v*v/5)), v/atanh(v))
 
   poly.nu <- (((((((a[8]*nu+a[7])*nu+a[6])*nu+a[5]))*nu+a[4])*nu+a[3])*nu+a[2])*nu+a[1]

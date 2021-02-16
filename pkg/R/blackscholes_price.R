@@ -29,9 +29,9 @@ BlackScholesPrice <- function(
 ){
     stdev <- sigma*sqrt(texp)
 
-    # a trick to get the intrinsic value for negative or zero vol
+    # a trick to get the intrinsic value for zero (or slightly negative) vol
     # also avoid NAN in case forward=strike
-    stdev[stdev < 1e-32] <- 1e-32
+    stdev[abs(stdev) < .Machine$double.eps] <- .Machine$double.eps
 
     d1 <- log(forward/strike)/stdev + 0.5*stdev
     d2 <- d1 - stdev
