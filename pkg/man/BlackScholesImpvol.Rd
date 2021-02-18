@@ -54,7 +54,7 @@ FER::BlackScholesImpvol(price, strike, spot, texp, intr=intr)
 \references{
 Giner, G., & Smyth, G. K. (2016). statmod: Probability Calculations
   for the Inverse Gaussian Distribution. The R Journal, 8(1), 339-351.
-  \url{https://doi.org/10.32614/RJ-2016-024}
+  \doi{10.32614/RJ-2016-024}
 }
 \seealso{
 \code{\link{BlackScholesPrice}}

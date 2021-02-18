@@ -50,6 +50,16 @@ intr <- 0.05
 FER::BlackScholesPrice(strike, spot, texp, sigma, intr=intr)
 
 }
+\references{
+Black, F., & Scholes, M. (1973). The Pricing of Options and
+  Corporate Liabilities. Journal of Political Economy, 81(3), 637-654.
+  \doi{10.1086/260062}
+
+  Black, F. (1976). The pricing of commodity contracts. Journal of Financial
+  Economics, 3(1), 167-179. \doi{10.1016/0304-405X(76)90024-6}
+
+  \url{https://en.wikipedia.org/wiki/Black-Scholes_model}
+}
 \seealso{
 \code{\link{BlackScholesImpvol}}
 }

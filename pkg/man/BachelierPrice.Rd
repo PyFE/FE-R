@@ -54,7 +54,7 @@ FER::BachelierPrice(strike, spot, texp, sigma, intr=intr)
 Choi, J., Kim, K., & Kwak, M. (2009).
   Numerical Approximation of the Implied Volatility Under Arithmetic Brownian
   Motion. Applied Mathematical Finance, 16(3), 261-268.
-  \url{https://doi.org/10.1080/13504860802583436}
+  \doi{10.1080/13504860802583436}
 }
 \seealso{
 \code{\link{BachelierImpvol}}
