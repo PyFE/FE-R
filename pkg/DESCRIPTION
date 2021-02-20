@@ -16,7 +16,6 @@ LazyData: true
 RoxygenNote: 7.1.1
 Imports: 
   stats,
-  statmod,
-  devtools
+  statmod
 Suggests: 
   testthat (>= 3.0.0)
