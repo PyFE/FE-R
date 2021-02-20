@@ -1,6 +1,6 @@
 Package: FER
 Title: Financial Engineering in R (FER)
-Version: 0.91
+Version: 0.92
 Authors@R: person("Jaehyuk", "Choi", email = "pyfe@eml.cc", role = c("aut", "cre"))
 Description: R implementations of standard financial engineering codes;
   vanilla option pricing models such as Black-Scholes, Bachelier, CEV, and
@@ -8,16 +8,15 @@ Description: R implementations of standard financial engineering codes;
 URL: https://github.com/PyFE/FE-R
 BugReports: https://github.com/PyFE/FE-R/issues
 Depends:
-    R (>= 3.3.1)
+  R (>= 3.3.1)
 NeedsCompilation: no
 License: GPL (>= 2)
 Encoding: UTF-8
 LazyData: true
 RoxygenNote: 7.1.1
 Imports: 
-    stats,
-    statmod,
-    devtools
+  stats,
+  statmod,
+  devtools
 Suggests: 
-    testthat (>= 3.0.0)
-Config/testthat/edition: 3
+  testthat (>= 3.0.0)
