@@ -14,7 +14,7 @@
 #'
 #' @references Schroder, M. (1989). Computing the constant elasticity
 #'   of variance option pricing formula. Journal of Finance,
-#'   44(1), 211-219. https://doi.org/10.1111/j.1540-6261.1989.tb02414.x
+#'   44(1), 211-219. \doi{10.1111/j.1540-6261.1989.tb02414.x}
 #'
 #' @export
 #'
