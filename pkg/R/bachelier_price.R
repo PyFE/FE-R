@@ -4,8 +4,8 @@
 #' @param spot (vector of) spot price
 #' @param texp (vector of) time to expiry
 #' @param sigma (vector of) volatility
-#' @param intr interest rate
-#' @param divr dividend rate
+#' @param intr interest rate (domestic interest rate)
+#' @param divr dividend/convenience yield (foreign interest rate)
 #' @param cp call/put sign. \code{1} for call, \code{-1} for put.
 #' @param forward forward price. If given, \code{forward} overrides \code{spot}
 #' @param df discount factor. If given, \code{df} overrides \code{intr}
