@@ -1,6 +1,6 @@
 Package: FER
-Title: Financial Engineering in R (FER)
-Version: 0.93
+Title: Financial Engineering in R
+Version: 0.94
 Authors@R: person("Jaehyuk", "Choi", email = "pyfe@eml.cc", role = c("aut", "cre"))
 Description: R implementations of standard financial engineering codes;
   vanilla option pricing models such as Black-Scholes, Bachelier, CEV, and
