@@ -73,7 +73,7 @@ SabrHagan2002 <- function(
 }
 
 
-#' Calculate the option price under the NSVh model (Choi et al. 2019)
+#' Calculate the option price under the NSVh model with lambda=1 (Choi et al. 2019)
 #'
 #' @param strike (vector of) strike price
 #' @param spot (vector of) spot price
@@ -105,9 +105,9 @@ SabrHagan2002 <- function(
 #' rho <- -0.5
 #' strike <- seq(0.1, 2, 0.1)
 #'
-#' FER::NsvhChoi2019(strike, spot, texp, sigma, vov, rho)
+#' FER::Nsvh1Choi2019(strike, spot, texp, sigma, vov, rho)
 #'
-NsvhChoi2019 <- function(
+Nsvh1Choi2019 <- function(
   strike=forward, spot, texp=1, sigma, vov=0, rho=0,
   intr=0, divr=0, cp=1L,
   forward=spot*exp(-divr*texp)/df, df=exp(-intr*texp)

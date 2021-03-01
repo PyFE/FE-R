@@ -18,7 +18,7 @@ test_that("Spread Put-Call Parity", {
                   divr1=divr1, divr2=divr2, cp=1L)
   p <- SwitchMargrabe(spot1 + strike, spot2, texp, sigma1, sigma2, corr, intr=intr,
                   divr1=divr1, divr2=divr2, cp=-1L)
-  expect_equal(c - p, val2, tolerance = 1e-10)
+  expect_equal(c - p, val2, tolerance = 1e-12)
 
 
   # For the rest
@@ -29,7 +29,7 @@ test_that("Spread Put-Call Parity", {
                   divr1=divr1, divr2=divr2, cp=1L)
   p <- SpreadKirk(strike, spot1, spot2, texp, sigma1, sigma2, corr, intr=intr,
                   divr1=divr1, divr2=divr2, cp=-1L)
-  expect_equal(c - p, val2, tolerance = 1e-10)
+  expect_equal(c - p, val2, tolerance = 1e-12)
 
   # SpreadBjerksund
   c <- SpreadBjerksund(strike, spot1, spot2, texp, sigma1, sigma2, corr, intr=intr,
@@ -43,7 +43,7 @@ test_that("Spread Put-Call Parity", {
                        divr1=divr1, divr2=divr2, cp=1L)
   p <- SpreadBachelier(strike, spot1, spot2, texp, sigma1*spot1, sigma2*spot2, corr, intr=intr,
                        divr1=divr1, divr2=divr2, cp=-1L)
-  expect_equal(c - p, val2, tolerance = 1e-10)
+  expect_equal(c - p, val2, tolerance = 1e-12)
 })
 
 

@@ -40,10 +40,10 @@ test_that("NSVh Put-Call Parity", {
   divr <- 0.05
 
   val = exp(-divr*texp)*spot - exp(-intr*texp)*strike
-  c <- FER::NsvhChoi2019(strike, spot, texp, sigma, vov, rho,
+  c <- FER::Nsvh1Choi2019(strike, spot, texp, sigma, vov, rho,
                          intr=intr, divr=divr, cp=1L)
-  p <- FER::NsvhChoi2019(strike, spot, texp, sigma, vov, rho,
+  p <- FER::Nsvh1Choi2019(strike, spot, texp, sigma, vov, rho,
                          intr=intr, divr=divr, cp=-1L)
-  expect_equal(c - p, val, tolerance = 1e-10)
+  expect_equal(c - p, val, tolerance = 1e-12)
 })
 
