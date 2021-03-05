@@ -31,10 +31,10 @@ test_that("Spread Put-Call Parity", {
                   divr1=divr1, divr2=divr2, cp=-1L)
   expect_equal(c - p, val2, tolerance = 1e-12)
 
-  # SpreadBjerksund
-  c <- SpreadBjerksund(strike, spot1, spot2, texp, sigma1, sigma2, corr, intr=intr,
+  # SpreadBjerksund2014
+  c <- SpreadBjerksund2014(strike, spot1, spot2, texp, sigma1, sigma2, corr, intr=intr,
                        divr1=divr1, divr2=divr2, cp=1L)
-  p <- SpreadBjerksund(strike, spot1, spot2, texp, sigma1, sigma2, corr, intr=intr,
+  p <- SpreadBjerksund2014(strike, spot1, spot2, texp, sigma1, sigma2, corr, intr=intr,
                        divr1=divr1, divr2=divr2, cp=-1L)
   expect_equal(c - p, val2, tolerance = 1e-10)
 

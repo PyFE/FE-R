@@ -127,9 +127,9 @@ SpreadKirk <- function(
 #'
 #' @examples
 #'
-#' FER::SpreadBjerksund((-2:2)*10, 100, 120, 1.3, 0.2, 0.3, -0.5)
+#' FER::SpreadBjerksund2014((-2:2)*10, 100, 120, 1.3, 0.2, 0.3, -0.5)
 #'
-SpreadBjerksund <- function(
+SpreadBjerksund2014 <- function(
   strike=0, spot1, spot2, texp=1, sigma1, sigma2, corr,
   intr=0, divr1=0, divr2=0, cp=1L,
   forward1=spot1*exp(-divr1*texp)/df,
