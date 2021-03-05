@@ -8,8 +8,8 @@
 #' @param vov (vector of) vol-of-vol
 #' @param rho (vector of) correlation
 #' @param beta (vector of) beta
-#' @param intr interest rate
-#' @param divr dividend rate
+#' @param intr interest rate (domestic interest rate)
+#' @param divr convenience rate (foreign interest rate)
 #' @param cp call/put sign. \code{NULL} for BS vol (default), \code{1} for call price, \code{-1} for put price.
 #' @param forward forward price. If given, \code{forward} overrides \code{spot}
 #' @param df discount factor. If given, \code{df} overrides \code{intr}
@@ -71,3 +71,58 @@ SabrHagan2002 <- function(
     return(p)
   }
 }
+
+
+#' Calculate the option price under the NSVh model with lambda=1 (Choi et al. 2019)
+#'
+#' @param strike (vector of) strike price
+#' @param spot (vector of) spot price
+#' @param texp (vector of) time to expiry
+#' @param sigma (vector of) volatility
+#' @param vov (vector of) vol-of-vol
+#' @param rho (vector of) correlation
+#' @param intr interest rate
+#' @param divr dividend rate
+#' @param cp call/put sign. \code{1} (default) for call price, \code{-1} for put price,
+#'   \code{NULL} for Bachelier volatility
+#' @param forward forward price. If given, \code{forward} overrides \code{spot}
+#' @param df discount factor. If given, \code{df} overrides \code{intr}
+#' @return BS volatility or option price based on \code{cp}
+#'
+#' @references Choi, J., Liu, C., & Seo, B. K. (2019). Hyperbolic normal
+#'   stochastic volatility model. Journal of Futures Markets, 39(2), 186–204.
+#'   \doi{10.1002/fut.21967}
+#'
+#' @export
+#'
+#' @examples
+#'
+#' spot <- 100
+#' strike <- seq(80,125,5)
+#' texp <- 1.2
+#' sigma <- 20
+#' vov <- 0.2
+#' rho <- -0.5
+#' strike <- seq(0.1, 2, 0.1)
+#'
+#' FER::Nsvh1Choi2019(strike, spot, texp, sigma, vov, rho)
+#'
+Nsvh1Choi2019 <- function(
+  strike=forward, spot, texp=1, sigma, vov=0, rho=0,
+  intr=0, divr=0, cp=1L,
+  forward=spot*exp(-divr*texp)/df, df=exp(-intr*texp)
+){
+  rhoc <- sqrt(1-rho*rho)
+  vov.sqt <- vov * sqrt(texp)
+  vov.var <- exp(0.5*texp*vov^2)
+
+  d <- asinh(((forward-strike)*vov/sigma - vov.var*rho)/rhoc) + atanh(rho)
+  d <- d / vov.sqt
+
+  p <- (forward - strike - sigma/vov*rho*vov.var) * stats::pnorm(cp*d)
+  p <- p + 0.5*sigma/vov*vov.var*
+    ((1+rho)*stats::pnorm(cp*(d+vov.sqt)) - (1-rho)*stats::pnorm(cp*(d-vov.sqt)))
+  p <- df * cp * p
+  return(p)
+}
+

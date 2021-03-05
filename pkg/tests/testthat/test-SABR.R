@@ -27,3 +27,23 @@ test_that("SabrHagan2002 BS Volatility Table 13", {
     0.2023, 0.1976, 0.1941, 0.1914, 0.1895)
   expect_equal(value, value2, tolerance = 1e-5)
 })
+
+
+test_that("NSVh Put-Call Parity", {
+  spot <- 120
+  strike <- 120 + (-3:3)*10
+  texp <- 2.3
+  sigma <- 20
+  vov <- 0.2
+  rho <- -0.5
+  intr <- 0.1
+  divr <- 0.05
+
+  val = exp(-divr*texp)*spot - exp(-intr*texp)*strike
+  c <- FER::Nsvh1Choi2019(strike, spot, texp, sigma, vov, rho,
+                         intr=intr, divr=divr, cp=1L)
+  p <- FER::Nsvh1Choi2019(strike, spot, texp, sigma, vov, rho,
+                         intr=intr, divr=divr, cp=-1L)
+  expect_equal(c - p, val, tolerance = 1e-12)
+})
+

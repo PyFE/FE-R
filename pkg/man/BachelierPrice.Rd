@@ -25,9 +25,9 @@ BachelierPrice(
 
 \item{sigma}{(vector of) volatility}
 
-\item{intr}{interest rate}
+\item{intr}{interest rate (domestic interest rate)}
 
-\item{divr}{dividend rate}
+\item{divr}{dividend/convenience yield (foreign interest rate)}
 
 \item{cp}{call/put sign. \code{1} for call, \code{-1} for put.}
 
