@@ -83,11 +83,10 @@ SabrHagan2002 <- function(
 #' @param rho (vector of) correlation
 #' @param intr interest rate
 #' @param divr dividend rate
-#' @param cp call/put sign. \code{1} (default) for call price, \code{-1} for put price,
-#'   \code{NULL} for Bachelier volatility
+#' @param cp \code{1} (default) for call price, \code{-1} for put price
 #' @param forward forward price. If given, \code{forward} overrides \code{spot}
 #' @param df discount factor. If given, \code{df} overrides \code{intr}
-#' @return BS volatility or option price based on \code{cp}
+#' @return option price
 #'
 #' @references Choi, J., Liu, C., & Seo, B. K. (2019). Hyperbolic normal
 #'   stochastic volatility model. Journal of Futures Markets, 39(2), 186–204.
