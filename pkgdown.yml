@@ -1,0 +1,9 @@
+pandoc: 3.8.3
+pkgdown: 2.2.0
+pkgdown_sha: ~
+articles:
+  articles/bs-inverse-gaussian: bs-inverse-gaussian.html
+last_built: 2026-06-20T03:41Z
+urls:
+  reference: https://pyfe.github.io/FE-R/reference
+  article: https://pyfe.github.io/FE-R/articles
