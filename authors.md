@@ -7,15 +7,15 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/PyFE/FE-R/blob/main/DESCRIPTION)
+[`inst/CITATION`](https://github.com/PyFE/FE-R/blob/main/inst/CITATION)
 
-Choi J (2026). *FER: Financial Engineering in R*. R package version
-0.94, <https://github.com/PyFE/FE-R>.
+Choi J (2021). *FER: Financial Engineering in R*. R package version
+0.94, <https://cran.r-project.org/package=FER>.
 
     @Manual{,
-      title = {FER: Financial Engineering in R},
+      title = {{FER}: Financial Engineering in R},
       author = {Jaehyuk Choi},
-      year = {2026},
+      year = {2021},
       note = {R package version 0.94},
-      url = {https://github.com/PyFE/FE-R},
+      url = {https://cran.r-project.org/package=FER},
     }
